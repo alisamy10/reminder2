@@ -58,6 +58,8 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     List<Note> allNotes;
     Marker userMarker;
 
+    boolean ch = false ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,11 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this, AddReminder.class));
+                ch= true;
             }
         });
+
+
         fab2=findViewById(R.id.fab2);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +106,6 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
 
             }
         });
-     onMapReady(googleMap);
         mapView.getMapAsync(this);
 
     }
@@ -120,7 +124,13 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         for (int i = 0; i < allNotes.size(); i++) {
             Toast.makeText(this, "bvbvn" + allNotes.get(i).getLat(), Toast.LENGTH_SHORT).show();
         }
-        drawUserMarker();
+
+
+        drawUserMarker(ch);
+        if (ch == true){
+
+            ch = false ;
+        }
     }
 
     @Override
@@ -171,7 +181,8 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     @Override
     public void onLocationChanged(Location location) {
         this.location = location;
-        drawUserMarker();
+         ch =true;
+        drawUserMarker(ch);
 
     }
 
@@ -250,8 +261,9 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
-
-        drawUserMarker();
+         ch = true ;
+        drawUserMarker(ch);
+        ch  =false ;
     }
 
 
@@ -259,65 +271,64 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
 
 
 
-    public void drawUserMarker(){
-        if(location==null||googleMap==null){
+    public void drawUserMarker(boolean check){
+     if (check) {
+         if (location == null || googleMap == null) {
 
 
-            return;
-        }
+             return;
+         }
 
-        if(userMarker==null)
-            userMarker = googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(location.getLatitude(),location.getLongitude()))
-                    .title("i'm here"+location.getLatitude()+" "+location.getLongitude()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car)));
-
-
-        else userMarker.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
-        googleMap.animateCamera(CameraUpdateFactory
-                .newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15));
+         if (userMarker == null)
+             userMarker = googleMap.addMarker(new MarkerOptions()
+                     .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                     .title("i'm here" + location.getLatitude() + " " + location.getLongitude()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car)));
 
 
-
-        for(int i =0;i<allNotes.size();i++)
-        {
-            Toast.makeText(this, "hellooo", Toast.LENGTH_SHORT).show();
-
-            LatLng l = new LatLng(allNotes.get(i).getLat(),allNotes.get(i).getLng());
-            pickupMarker = new MarkerOptions();
-            pickupMarker.position(l);
-            googleMap.addMarker(pickupMarker);
+         else userMarker.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+         googleMap.animateCamera(CameraUpdateFactory
+                 .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
 
 
-        //else pickupMarker.position(new LatLng (allNotes.get(i).getLat(),allNotes.get(i).getLng()));
+         Toast.makeText(this, "" + allNotes.size(), Toast.LENGTH_SHORT).show();
+         for (int i = 0; i < allNotes.size(); i++) {
 
 
-        }
+             LatLng l = new LatLng(allNotes.get(i).getLat(), allNotes.get(i).getLng());
+             pickupMarker = new MarkerOptions();
+             pickupMarker.position(l);
+             googleMap.addMarker(pickupMarker);
+
+             if (distance(allNotes.get(i).getLat(), allNotes.get(i).getLng(), location.getLatitude(), location.getLongitude()) * 1000 <= 400) {
+
+                 createNotification("hlloasdhsad");
+
+             }
 
 
+             //else pickupMarker.position(new LatLng (allNotes.get(i).getLat(),allNotes.get(i).getLng()));
 
 
-
-        //if(distance(30.125742,31.281684,location.getLatitude(),location.getLongitude())*1000>=400){
-           // Toast.makeText(this, "vkjvvkjvjkvkv", Toast.LENGTH_SHORT).show();
-            //createNotification("hlloasdhsad");
-
-        //}
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                Toast.makeText(MapsActivity.this,marker.getPosition().latitude+ "", Toast.LENGTH_SHORT).show();
-
-
-                return false;
-            }
-        });
+         }
 
 
 
 
-    }
+         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+             @Override
+             public boolean onMarkerClick(Marker marker) {
+
+                 Toast.makeText(MapsActivity.this, marker.getPosition().latitude + "", Toast.LENGTH_SHORT).show();
+
+
+                 return false;
+             }
+         });
+
+     }
+}
+
+
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
