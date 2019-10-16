@@ -39,7 +39,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     private MarkerOptions pickupMarker;
     private Toolbar toolbar;
     private GoogleMap googleMap;
-    private FloatingActionButton fab, fab2;
+    private FloatingActionButton fab, fab2 , fab3;
     private List<Note> allNotes;
     private Marker userMarker;
     boolean ch = false ;
@@ -74,6 +74,16 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
             @Override
             public void onClick(View view) {
                drawCurrentUserLocation();
+            }
+        });
+        fab3=findViewById(R.id.fab3);
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MapsActivity.this, ShowMemory.class));
+
+
             }
         });
         mapView.getMapAsync(this);
