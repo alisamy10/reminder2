@@ -14,7 +14,7 @@ public class Note {
  private String title,description,date,time;
  private Double lat,lng;
  @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
- byte [] image;
+ private byte [] image;
 
 @Ignore
     public Note(String title, String description, String date, String time, Double lat, Double lng, byte[] image) {

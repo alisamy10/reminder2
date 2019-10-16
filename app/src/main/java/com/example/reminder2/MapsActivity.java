@@ -97,7 +97,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     }
 
     private void initView() {
-        mapView = (MapView) findViewById(R.id.map);
+        mapView =  findViewById(R.id.map);
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
     }
@@ -112,7 +112,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         }
 
         drawUserMarker(ch);
-        if (ch == true){
+        if (ch ){
             ch = false ;
         }
     }

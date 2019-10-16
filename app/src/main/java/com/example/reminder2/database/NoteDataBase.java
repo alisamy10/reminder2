@@ -15,7 +15,6 @@ import com.example.reminder2.model.Note;
 @Database(entities = {Note.class},version = 3,exportSchema = false)
 public abstract class NoteDataBase extends RoomDatabase {
 
-    public static final String DB_NAME = "Notes database";
     private static NoteDataBase instance;
 
     public abstract NoteDao notesDao();
@@ -23,7 +22,7 @@ public abstract class NoteDataBase extends RoomDatabase {
         if(instance==null){
             //initialize
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    NoteDataBase.class,DB_NAME)
+                    NoteDataBase.class,"Notes database")
                     .fallbackToDestructiveMigration()
                    .allowMainThreadQueries()
                     .build();

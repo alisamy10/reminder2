@@ -71,20 +71,20 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
     }
 
     private void initView() {
-        mTitle = (EditText) findViewById(R.id.title);
-        mDecription = (EditText) findViewById(R.id.decription);
-        mDate = (EditText) findViewById(R.id.date);
-        mSetdate = (TextView) findViewById(R.id.setdate);
+        mTitle =  findViewById(R.id.title);
+        mDecription = findViewById(R.id.decription);
+        mDate =  findViewById(R.id.date);
+        mSetdate =  findViewById(R.id.setdate);
         mSetdate.setOnClickListener(this);
-        mTime = (EditText) findViewById(R.id.time);
-        mSetTime = (TextView) findViewById(R.id.setTime);
+        mTime =  findViewById(R.id.time);
+        mSetTime =  findViewById(R.id.setTime);
         mSetTime.setOnClickListener(this);
-        mImage = (ImageView) findViewById(R.id.image);
-        mAdd = (Button) findViewById(R.id.add);
+        mImage =  findViewById(R.id.image);
+        mAdd =  findViewById(R.id.add);
         mAdd.setOnClickListener(this);
-        mLocation = (Button) findViewById(R.id.location);
+        mLocation =  findViewById(R.id.location);
         mLocation.setOnClickListener(this);
-        mSave = (Button) findViewById(R.id.save);
+        mSave =  findViewById(R.id.save);
         mSave.setOnClickListener(this);
     }
 
