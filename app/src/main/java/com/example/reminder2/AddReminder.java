@@ -196,8 +196,8 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
                     myLocationProvider = new MyLocationProvider(this);
                 // lw msh 3awaz a listen 3la update ab3t null
                 location = myLocationProvider.getCurrentLocation(null);
-                lat=29.962696;
-                lang=31.276941;
+                lat=location.getLatitude();
+                lang=location.getLongitude();
                 break;
             case R.id.save:
                 // TODO 19/10/15
