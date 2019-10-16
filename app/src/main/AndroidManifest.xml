@@ -22,7 +22,7 @@
         <activity android:name=".ShowMemory"></activity>
         <activity
             android:name=".AddReminder"
-            android:label="@string/title_activity_add_reminder"
+            android:label="add reminder"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme"></activity>
         <!--

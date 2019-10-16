@@ -3,7 +3,5 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/save_reminder"
-          android:title="@string/action_save_reminder"
-          app:showAsAction="ifRoom" />
+
 </menu>
