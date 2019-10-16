@@ -36,7 +36,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
-    implementation 'com.bignerdranch.android:recyclerview-multiselect:+'
+
     implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
@@ -48,8 +48,20 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+
+
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //cardView
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.victor:lib:1.0.4'
+    implementation 'com.balysv:material-ripple:1.0.2'
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+
+
 }

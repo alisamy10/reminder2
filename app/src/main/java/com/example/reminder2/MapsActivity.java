@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -42,17 +43,25 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     private FloatingActionButton fab, fab2 , fab3;
     private List<Note> allNotes;
     private Marker userMarker;
-    boolean ch = false ;
-
+    boolean checkForOneTimeCallDarwarMarker = false ;
+     private  String tagForNotification = "";
+     boolean getMarkersOneTime  ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        getMarkersOneTime=true;
         initView();
-        allNotes = new ArrayList<>();
         mapView.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+        onClick();
+
+        allNotes = new ArrayList<>();
+
+
+
 
         if (isLocationPermissionAllowed()) {//permission granted
             //call your function
@@ -60,33 +69,8 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         } else { //request runtime permission
             requestLocationPermission();
         }
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this, AddReminder.class));
-                ch= true;
-            }
-        });
 
 
-        fab2=findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               drawCurrentUserLocation();
-            }
-        });
-        fab3=findViewById(R.id.fab3);
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(MapsActivity.this, ShowMemory.class));
-
-
-            }
-        });
-        mapView.getMapAsync(this);
 
     }
     public void drawCurrentUserLocation(){
@@ -106,25 +90,70 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
 
     }
 
+
+    private void onClick(){
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, AddReminder.class));
+                checkForOneTimeCallDarwarMarker= true;
+                getMarkersOneTime =true;
+            }
+        });
+
+
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUserLocation();
+                drawCurrentUserLocation();
+            }
+        });
+
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MapsActivity.this, ShowMemory.class));
+
+
+            }
+        });
+
+    }
+
     private void initView() {
         mapView =  findViewById(R.id.map);
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
+        fab3=findViewById(R.id.fab3);
+        fab2=findViewById(R.id.fab2);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-        allNotes = NoteDataBase.getInstance(getApplicationContext()).notesDao().getAllNotes();
-        for (int i = 0; i < allNotes.size(); i++) {
-            Toast.makeText(this, "bvbvn" + allNotes.get(i).getLat(), Toast.LENGTH_SHORT).show();
-        }
 
-        drawUserMarker(ch);
-        if (ch ){
-            ch = false ;
-        }
+        mapView.getMapAsync(this);
+
+        allNotes = NoteDataBase.getInstance(getApplicationContext()).notesDao().getAllNotes();
+
+
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        this.location = location;
+
+
+    if (googleMap!=null) {
+
+       drawUserMarker(tagForNotification);
+       Log.e("k","loc");
+
+    }
     }
 
     @Override
@@ -169,13 +198,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         location = myLocationProvider.getCurrentLocation(this);
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        this.location = location;
-         ch =true;
-        drawUserMarker(ch);
 
-    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -201,7 +224,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
             // Show an explanation to the user *asynchronously* -- don't block
             // this thread waiting for the user's response! After the user
             // sees the explanation, try again to request the permission.
-            showMessage("this app wants your location to find nearby drivers", "OK", new DialogInterface.OnClickListener() {
+            showMessage("this app wants your location ", "OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -252,31 +275,33 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
-         ch = true ;
-        drawUserMarker(ch);
-        ch  =false ;
+
+        getMarkars(getMarkersOneTime);
+
+        Log.e("k","ready");
+
+        drawUserMarker(tagForNotification);
+
     }
 
-    public void drawUserMarker(boolean check){
-     if (check) {
+    public void drawUserMarker(String tag){
+
 
          drawCurrentUserLocation();
-         Toast.makeText(this, "" + allNotes.size(), Toast.LENGTH_SHORT).show();
+
+         if (tag.equals("")&&location!=null&&allNotes.size()!=0) {
+             tagForNotification="stop";
          for (int i = 0; i < allNotes.size(); i++) {
 
 
-             LatLng l = new LatLng(allNotes.get(i).getLat(), allNotes.get(i).getLng());
-             pickupMarker = new MarkerOptions();
-             pickupMarker.position(l);
-             googleMap.addMarker(pickupMarker);
+                 if (distance(allNotes.get(i).getLat(), allNotes.get(i).getLng(), location.getLatitude(), location.getLongitude()) * 1000 <= 400) {
 
-             if (distance(allNotes.get(i).getLat(), allNotes.get(i).getLng(), location.getLatitude(), location.getLongitude()) * 1000 <= 400) {
+                     createNotification(allNotes.get(i).getTitle());
 
-                 createNotification("hlloasdhsad");
+                 }
 
              }
-
-
+         freezNotificationOneMin();
              //else pickupMarker.position(new LatLng (allNotes.get(i).getLat(),allNotes.get(i).getLng()));
 
 
@@ -294,8 +319,48 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
              }
          });
 
-     }
+
+
 }
+
+ private void getMarkars(boolean check) {
+
+
+        if (check) {
+            Log.e("k","getMark");
+            for (int i = 0; i < allNotes.size(); i++) {
+
+
+                LatLng l = new LatLng(allNotes.get(i).getLat(), allNotes.get(i).getLng());
+                pickupMarker = new MarkerOptions();
+                pickupMarker.position(l);
+                googleMap.addMarker(pickupMarker);
+
+            }
+            getMarkersOneTime=false;
+        }
+}
+
+
+    private void freezNotificationOneMin(){
+
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+           tagForNotification ="";
+           Log.e("k","openHandler");
+
+
+
+            }
+        },60000);
+
+
+    }
+
 
 
 }

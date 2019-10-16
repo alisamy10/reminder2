@@ -1,88 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".AddReminder"
+    >
 
-    <EditText
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title"
-        android:textSize="22sp"
-        android:lines="2"
-        android:textColorHint="@color/colorAccent"
-        />
-    <EditText
-        android:id="@+id/decription"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@android:color/white"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="start"
-        android:lines="4"
-        android:hint="decription"
-        android:textSize="22sp"
-        android:textColorHint="@color/colorAccent"
-        />
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date"
-        android:textSize="22sp"
-        android:layout_marginTop="10dp"
-        android:textColorHint="@color/colorAccent"
-        />
-    <TextView
-        android:id="@+id/setdate"
-        android:layout_width="match_parent"
-        android:text="kjsaksjadksad"
-        android:layout_height="wrap_content"
-        />
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="time"
-        android:textSize="22sp"
-        android:layout_marginTop="10dp"
-        android:textColorHint="@color/colorAccent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         />
 
-    <TextView
-        android:id="@+id/setTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="kjsaksjadksad" />
 
-    <ImageView android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        />
-    <Button
-        android:id="@+id/add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD image"
-        android:textSize="22sp"
-        />
-    <Button
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="current location"
-        android:textSize="22sp"
 
-        />
-    <Button
-        android:id="@+id/save"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SAVE"
-        android:textSize="22sp"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
 
-</LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="Add Location"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="20dp"
+                    />
+
+
+
+                <EditText
+
+                    android:id="@+id/edit_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Details"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+
+                    <EditText
+                        android:id="@+id/edit_tittle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="Tittle"
+                        android:inputType="phone"
+                        android:textSize="16sp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        />
+
+
+
+                <TextView
+                    android:id="@+id/txt_date1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Date"
+                    android:inputType="phone"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+                <TextView
+                   android:id="@+id/txt_time1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Time"
+                    android:inputType="phone"
+                    android:textSize="16sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                style="@style/RippleStyleWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <Button
+                    android:id="@+id/sign_up_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+
+                    android:background="@drawable/backgroud_of_add_btn"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    />
+
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -22,6 +22,7 @@ import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.locationHelper.MyLocationProvider;
 import com.example.reminder2.model.Note;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -36,7 +37,8 @@ import java.util.Date;
 public class AddReminder extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener {
 
 
-    private EditText mTitle, mDecription, mDate, mTime;
+    private EditText mTitle, mDecription;
+    private TextView  mDate, mTime;
     private TextView mSetdate, mSetTime;
     private ImageView mImage;
     private Button mAdd, mLocation, mSave;
@@ -54,33 +56,35 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         setContentView(R.layout.activity_add_reminder);
         initView();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String currentDate = sdf.format(new Date());
-        mSetdate.setText(currentDate);
 
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss z");
-        String currentTime = sdf2.format(new Date());
-        mSetTime.setText(currentTime);
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//        String currentDate = sdf.format(new Date());
+//        mSetdate.setText(currentDate);
+//
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss z");
+//        String currentTime = sdf2.format(new Date());
+//        mSetTime.setText(currentTime);
 
     }
 
     private void initView() {
-        mTitle = findViewById(R.id.title);
-        mDecription = findViewById(R.id.decription);
-        mDate = findViewById(R.id.date);
-        mSetdate = findViewById(R.id.setdate);
-        mTime = findViewById(R.id.time);
-        mSetdate.setOnClickListener(this);
-        mSetTime = findViewById(R.id.setTime);
-        mSetTime.setOnClickListener(this);
-
-        mImage = findViewById(R.id.image);
-        mAdd = findViewById(R.id.add);
-        mAdd.setOnClickListener(this);
-        mLocation = findViewById(R.id.location);
-        mLocation.setOnClickListener(this);
-        mSave = findViewById(R.id.save);
-        mSave.setOnClickListener(this);
+//        mTitle = findViewById(R.id.title);
+//        mDecription = findViewById(R.id.decription);
+//         mDate = findViewById(R.id.txt_date1);
+//        mSetdate = findViewById(R.id.setdate);
+//        mTime = findViewById(R.id.time);
+//        mSetdate.setOnClickListener(this);
+//        mSetTime = findViewById(R.id.setTime);
+//        mSetTime.setOnClickListener(this);
+//
+//        mImage = findViewById(R.id.image);
+//        mAdd = findViewById(R.id.add);
+//        mAdd.setOnClickListener(this);
+//        mLocation = findViewById(R.id.location);
+//        mLocation.setOnClickListener(this);
+//        mSave = findViewById(R.id.save);
+//        mSave.setOnClickListener(this);
     }
 
 
@@ -152,25 +156,25 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
             case R.id.add:
                 SelectImage();
                 break;
-            case R.id.location:
-                // TODO 19/10/15
-                if (myLocationProvider == null)
-                    myLocationProvider = new MyLocationProvider(this);
-                // lw msh 3awaz a listen 3la update ab3t null
-                location = myLocationProvider.getCurrentLocation(null);
-                lat = location.getLatitude();
-                lang = location.getLongitude();
-                break;
-            case R.id.save:
-                // TODO 19/10/15
-                saveReminder();
-                break;
-            case R.id.setdate:// TODO 19/10/16
-                setDate();
-                break;
-            case R.id.setTime:// TODO 19/10/16
-                setTime();
-                break;
+//            case R.id.location:
+//                // TODO 19/10/15
+//                if (myLocationProvider == null)
+//                    myLocationProvider = new MyLocationProvider(this);
+//                // lw msh 3awaz a listen 3la update ab3t null
+//                location = myLocationProvider.getCurrentLocation(null);
+//                lat = location.getLatitude();
+//                lang = location.getLongitude();
+//                break;
+//            case R.id.save:
+//                // TODO 19/10/15
+//                saveReminder();
+//                break;
+//            case R.id.setdate:// TODO 19/10/16
+//                setDate();
+//                break;
+//            case R.id.setTime:// TODO 19/10/16
+             //  setTime();
+             //   break;
             default:
                 break;
         }

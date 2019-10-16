@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/book_mrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                >
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tittle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hena el title"
+                        android:textSize="20sp"
+                        android:shadowDx="2"
+                     android:textColor="@color/black"
+                        android:shadowDy="2"
+                        android:shadowRadius="15"
+                        android:layout_marginBottom="5dp"
+                        android:shadowColor="@android:color/darker_gray"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="description"
+                        android:textSize="18sp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                   <TextView
+                       android:id="@+id/txt_date"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="5/5/2019"
+                       android:textSize="15sp"
+                       android:shadowDx="2"
+                       android:layout_gravity="end"
+                       android:shadowDy="2"
+                       android:shadowRadius="15"
+
+                       android:shadowColor="@android:color/darker_gray"/>
+
+                        <TextView
+                            android:id="@+id/txt_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="at 20:39"
+                            android:textSize="15sp"
+                            android:shadowDx="2"
+                            android:layout_gravity="end"
+                            android:shadowDy="2"
+                            android:shadowRadius="15"
+
+                            android:shadowColor="@android:color/darker_gray"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
 </LinearLayout>
