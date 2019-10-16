@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textSize="22sp"
+        android:lines="2"
+        android:textColorHint="@color/colorAccent"
+        />
+    <EditText
+        android:id="@+id/decription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="start"
+        android:lines="4"
+        android:hint="decription"
+        android:textSize="22sp"
+        android:textColorHint="@color/colorAccent"
+        />
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorAccent"
+        />
+    <TextView
+        android:id="@+id/setdate"
+        android:layout_width="match_parent"
+        android:text="kjsaksjadksad"
+        android:layout_height="wrap_content"
+        />
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="time"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorAccent"
+        />
+
+    <TextView
+        android:id="@+id/setTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kjsaksjadksad" />
+
+    <ImageView android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD image"
+        android:textSize="22sp"
+        />
+    <Button
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="current location"
+        android:textSize="22sp"
+
+        />
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE"
+        android:textSize="22sp"
+        />
+
+</LinearLayout>
