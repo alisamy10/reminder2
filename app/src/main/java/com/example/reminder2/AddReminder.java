@@ -2,6 +2,7 @@ package com.example.reminder2;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,11 +22,13 @@ import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.locationHelper.MyLocationProvider;
 import com.example.reminder2.model.Note;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,9 +46,8 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
     private MyLocationProvider myLocationProvider;
     private Location location;
     private double lat, lang;
-    int Request_Camera = 100, Select_Image = 101;
+    private int Request_Camera = 100, Select_Image = 101;
     public byte[] byteImage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +223,6 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         mSetTime.setText(sTime);
     }
 
-
     private void SelectImage() {
 
         final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
@@ -254,6 +255,7 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
         builder.show();
 
+
     }
 
     @Override
@@ -262,25 +264,27 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == Request_Camera) {
 
-
                 Bundle bundle = data.getExtras();
-                final Bitmap bitmap = (Bitmap) bundle.get("data");
+                final Bitmap bitmap = (Bitmap) bundle.get("image");
                 mImage.setImageBitmap(bitmap);
 
             } else if (requestCode == Select_Image) {
 
                 Uri SelectedImageUri = data.getData();
+                CropImage.activity(SelectedImageUri)
+                        .setAspectRatio(1, 1)
+                        .setMinCropWindowSize(500, 500)
+                        .start(this);
                 mImage.setImageURI(SelectedImageUri);
             }
 
-
         }
     }
-
 }
 
 
