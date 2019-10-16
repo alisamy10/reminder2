@@ -13,24 +13,21 @@ public class Note {
  private int id;
  private String title,description,date,time;
  private Double lat,lng;
- //Date datee;
- //@ColumnInfo(typeAffinity = ColumnInfo.BLOB)
- //byte [] image;
+ @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+ byte [] image;
 
-
-
-    public Note() {
-    }
-
-
-    @Ignore
-    public Note(String title, String description, String date, String time, Double lat, Double lng) {
+@Ignore
+    public Note(String title, String description, String date, String time, Double lat, Double lng, byte[] image) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.time = time;
         this.lat = lat;
         this.lng = lng;
+        this.image = image;
+    }
+
+    public Note() {
     }
 
     public int getId() {
@@ -87,5 +84,13 @@ public class Note {
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

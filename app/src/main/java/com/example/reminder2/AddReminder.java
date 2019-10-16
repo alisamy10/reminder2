@@ -1,9 +1,17 @@
 package com.example.reminder2;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +29,8 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,31 +38,24 @@ import java.util.Date;
 public class AddReminder extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener {
 
 
-    private int mDay;
-    private EditText mTitle;
-    private EditText mDecription;
-    private EditText mDate;
-    private TextView mSetdate;
-    private EditText mTime;
-    private TextView mSetTime;
+    private EditText mTitle , mDecription , mDate , mTime;
+    private TextView mSetdate , mSetTime;
     private ImageView mImage;
-    private Button mAdd;
-    private Button mLocation;
-    private Button mSave;
-    private int mHour,mYear,mMonth;
-    String sDate;
-    private int mMinute;
-    private String sTime;
-    MyLocationProvider myLocationProvider;
-    Location location;
-    double lat,lang;
+    private Button mAdd , mLocation , mSave;
+
+    private int mHour,mYear,mMonth , mMinute , mDay;
+    private String sTime , sDate;
+    private MyLocationProvider myLocationProvider;
+    private Location location;
+    private double lat,lang;
+    int  Request_Camera=100 , Select_Image=101;
+    public byte[] byteImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
         initView();
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String currentDate = sdf.format(new Date());
@@ -61,6 +64,7 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss z");
         String currentTime = sdf2.format(new Date());
         mSetTime.setText(currentTime);
+
 
 
 
@@ -159,7 +163,18 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         String date = mSetdate.getText().toString();
         String timeS = mSetTime.getText().toString();
 
-        Note note = new Note(titleS,des ,date ,timeS,lat,lang);
+        if(mImage.getDrawable()!=null){
+
+            Bitmap bitmap = ((BitmapDrawable) mImage.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            if(bitmap !=null) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byteImage = baos.toByteArray();
+
+            }
+        }
+
+        Note note = new Note(titleS,des ,date ,timeS,lat,lang,byteImage);
         NoteDataBase.getInstance(this).notesDao()
                 .insert(note);
         showMessage(R.string.note_added_successfully, R.string.ok
@@ -189,6 +204,7 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
                 break;
             case R.id.add:
+                SelectImage();
                 break;
             case R.id.location:
                 // TODO 19/10/15
@@ -208,6 +224,65 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
                 break;
         }
     }
+
+    private void SelectImage(){
+
+        final CharSequence[] items ={"Camera","Gallery","Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddReminder.this);
+        builder.setTitle("Add Image");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+
+                if(items[i].equals("Camera")){
+
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,Request_Camera);
+
+
+                }else if (items[i].equals("Gallery")){
+
+                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                    startActivityForResult(intent.createChooser(intent,"Select File"),Select_Image);
+
+                }else  if(items[i].equals("Cancel")){
+
+                    dialog.dismiss();
+
+                }
+            }
+        });
+
+        builder.show();
+
+    }
+    @Override
+    public void onActivityResult(int requestCode,int resultCode, Intent data) {
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode== Activity.RESULT_OK){
+
+            if(requestCode== Request_Camera){
+
+
+                Bundle bundle = data.getExtras();
+                final Bitmap bitmap = (Bitmap) bundle.get("data");
+                mImage.setImageBitmap(bitmap);
+
+            }else if(requestCode== Select_Image){
+
+                Uri SelectedImageUri = data.getData();
+                mImage.setImageURI(SelectedImageUri);
+            }
+
+
+        }
+    }
+
 }
 
 

@@ -28,8 +28,9 @@ public interface NoteDao {
     @Query("delete from Note where id=:id")
     void deleteNoteById(int id);
 
-    @Query("select * from Note where id=:id")
-    Note getNote(int id);
+    @Query("select * from Note where id=:title")
+    Note getNote(String title);
+
 
     @Query("select COUNT (id) from Note ")
     int getCount();
