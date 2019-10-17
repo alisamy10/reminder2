@@ -33,9 +33,7 @@ public class ShowMemory extends AppCompatActivity  implements SearchView.OnQuery
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        noteList  = NoteDataBase.getInstance(this)
-                .notesDao()
-                .getAllNotes();
+
         recyclerView = findViewById(R.id.rec);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

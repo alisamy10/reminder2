@@ -1,6 +1,5 @@
 package com.example.reminder2.database;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -28,7 +27,7 @@ public interface NoteDao {
     @Query("delete from Note where id=:id")
     void deleteNoteById(int id);
 
-    @Query("select * from Note where id=:title")
+    @Query("select * from Note where title=:title")
     Note getNote(String title);
 
 
