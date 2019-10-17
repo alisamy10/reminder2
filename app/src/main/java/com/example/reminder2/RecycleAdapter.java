@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reminder2.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
@@ -20,7 +22,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     public RecycleAdapter (List<Note> noteList, Context context) {
         this.noteList = noteList;
-
         this.context = context;
     }
 
@@ -34,7 +35,11 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        final Note note = noteList.get(position);
+        holder.title.setText(note.getTitle());
+        holder.txt_desc.setText(note.getDescription());
+        holder.txt_time.setText(note.getTime());
+        holder.txt_date.setText(note.getDate());
     }
 
     @Override
@@ -42,14 +47,29 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         if(noteList==null)return 0;
         return noteList.size();
     }
+    public void changeLIst ( List<Note> newList){
+
+        this.noteList= newList;
+        notifyDataSetChanged();
+    }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+      TextView title;
+        TextView txt_desc;
+        TextView txt_date;
+        TextView txt_time ;
 
 
-
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
+            title =itemView.findViewById(R.id.tittle);
+            txt_desc=itemView.findViewById(R.id.txt_desc);
+            txt_date=itemView.findViewById(R.id.txt_date);
+            txt_time=itemView.findViewById(R.id.txt_time);
+
+
 
         }
     }
