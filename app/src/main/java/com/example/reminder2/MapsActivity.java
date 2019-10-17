@@ -362,5 +362,4 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     }
 
 
-
 }

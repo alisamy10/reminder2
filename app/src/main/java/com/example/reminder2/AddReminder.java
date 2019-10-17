@@ -56,7 +56,7 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         sDate = sdf.format(new Date());
         dateTxt.setText(sDate);
 
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss z");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss ");
         sTime = sdf2.format(new Date());
         timeTxt.setText(sTime);
 
@@ -151,16 +151,18 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
 
     @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute  ) {
         mHour = hourOfDay;
         mMinute = minute;
-        if (minute < 10) {
+        if (minute < 10)
             sTime = hourOfDay + ":" + "0" + minute;
-        } else {
+         else
             sTime = hourOfDay + ":" + minute;
-        }
+
         timeTxt.setText(sTime);
     }
+
+
 
     private void SelectImage() {
 
@@ -238,12 +240,16 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
                 // TODO 19/10/17
                 break;
             case R.id.sign_up_btn:
-                if(tittleEdit.getText().toString().trim().isEmpty()&&descEdit.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(this, "plz fill the memory ", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else
+                if(tittleEdit.getText().toString().trim().isEmpty())
+                {tittleEdit.setError("input required");return ;}
+                if(descEdit.getText().toString().trim().isEmpty())
+                { descEdit.setError("input required");return ;}
+
+                else{
                     saveReminder();
+                  startActivity(new Intent(this,MapsActivity.class));
+                  finish();
+                }
                 // TODO 19/10/17
                 break;
             default:
@@ -251,7 +257,4 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         }
     }
 }
-
-
-
 
