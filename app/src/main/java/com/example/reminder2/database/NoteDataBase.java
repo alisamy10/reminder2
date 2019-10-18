@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.reminder2.model.Note;
+import com.example.reminder2.database.model.Note;
 
 
 @Database(entities = {Note.class},version = 3,exportSchema = false)

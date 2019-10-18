@@ -1,4 +1,4 @@
-package com.example.reminder2.model;
+package com.example.reminder2.database.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

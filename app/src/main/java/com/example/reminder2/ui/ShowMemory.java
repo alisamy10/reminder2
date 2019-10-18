@@ -1,35 +1,28 @@
-package com.example.reminder2;
+package com.example.reminder2.ui;
 
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.reminder2.Base.BaseActivity;
+import com.example.reminder2.R;
+import com.example.reminder2.adapter.RecycleAdapter;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.helper.SwipeToDeleteCallback;
-import com.example.reminder2.model.Note;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.reminder2.database.model.Note;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,49 +51,7 @@ public class ShowMemory extends BaseActivity implements SearchView.OnQueryTextLi
         adapter = new RecycleAdapter(noteList,this);
         recyclerView.setAdapter(adapter);
         enableSwipeToDeleteAndUndo();
-        /*new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-                return false;
-            }
 
-            @Override
-            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-
-
-                showMessage("delete", "ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        NoteDataBase.getInstance(ShowMemory.this)
-                                .notesDao()
-                                .delete(adapter.getTodo(viewHolder.getAdapterPosition()));
-
-                        List<Note> list = NoteDataBase.getInstance(activity)
-                                .notesDao()
-                                .getAllNotes();
-                        adapter.changeLIst(list);
-                        dialog.dismiss();
-
-                    }
-                }, "no", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        List<Note> list = NoteDataBase.getInstance(activity)
-                                .notesDao()
-                                .getAllNotes();
-                        adapter.changeLIst(list);
-                        dialog.dismiss();
-
-                    }
-                },true);
-
-
-
-            }
-        }).attachToRecyclerView(recyclerView);
-
-
-         */
     }
 
     private void enableSwipeToDeleteAndUndo() {
@@ -200,8 +151,11 @@ public class ShowMemory extends BaseActivity implements SearchView.OnQueryTextLi
 
 
         if (item.getItemId() == R.id.delete_All) {
+           if(NoteDataBase.getInstance(ShowMemory.this).notesDao().getCount()==0)
+               Toast.makeText(this, "No Memories To Delete It ", Toast.LENGTH_SHORT).show();
+               else
 
-            showMessage("Do you want to delete all memory ? ", "YES", new DialogInterface.OnClickListener() {
+                  showMessage("Do you want to delete all memory ? ", "YES", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

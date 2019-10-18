@@ -1,4 +1,4 @@
-package com.example.reminder2;
+package com.example.reminder2.ui;
 
 import android.Manifest;
 
@@ -19,9 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.reminder2.Base.BaseActivity;
+import com.example.reminder2.R;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.locationHelper.MyLocationProvider;
-import com.example.reminder2.model.Note;
+import com.example.reminder2.database.model.Note;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.reminder2.model.Note;
+import com.example.reminder2.database.model.Note;
 
 import java.util.List;
 

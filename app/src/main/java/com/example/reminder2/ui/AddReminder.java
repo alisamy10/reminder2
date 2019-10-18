@@ -1,7 +1,6 @@
-package com.example.reminder2;
+package com.example.reminder2.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,9 +18,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.reminder2.Base.BaseActivity;
+import com.example.reminder2.R;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.locationHelper.MyLocationProvider;
-import com.example.reminder2.model.Note;
+import com.example.reminder2.database.model.Note;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;

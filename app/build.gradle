@@ -60,5 +60,4 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
 
 
-
 }

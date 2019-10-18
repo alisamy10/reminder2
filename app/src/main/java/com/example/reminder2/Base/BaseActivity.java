@@ -12,8 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.example.reminder2.MapsActivity;
+import com.example.reminder2.ui.MapsActivity;
 import com.example.reminder2.R;
 
 
