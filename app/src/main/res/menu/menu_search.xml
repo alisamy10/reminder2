@@ -8,6 +8,9 @@
         android:icon="@drawable/ic_action_name"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
-
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/delete_All"
+        android:title="Delete all"
+        />
 </menu>

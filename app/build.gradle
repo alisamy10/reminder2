@@ -32,13 +32,9 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // For Kotlin use kapt instead of annotationProcessor
 
-    implementation 'com.getbase:floatingactionbutton:1.9.0'
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
-
-    implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
-    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -49,11 +45,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
 
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     //cardView
@@ -62,6 +56,9 @@ dependencies {
     implementation 'com.balysv:material-ripple:1.0.2'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+
 
 
 }

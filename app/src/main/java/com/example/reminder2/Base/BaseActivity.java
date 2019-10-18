@@ -12,11 +12,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
 import com.example.reminder2.MapsActivity;
 import com.example.reminder2.R;
 
 
 public class BaseActivity extends AppCompatActivity {
+
 
 
     public AlertDialog showMessage(String message, String posActionName){
@@ -86,6 +88,9 @@ public AlertDialog showMessage(int message, int posActionName,
         builder.setCancelable(isCancelable);
         return builder.show();
     }
+
+
+
     private String CHANNEL_ID;
 
 

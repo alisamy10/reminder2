@@ -10,6 +10,9 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -112,15 +115,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
             }
         });
 
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                startActivity(new Intent(MapsActivity.this, ShowMemory.class));
-
-
-            }
-        });
 
     }
 
@@ -128,7 +123,6 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         mapView =  findViewById(R.id.map);
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
-        fab3=findViewById(R.id.fab3);
         fab2=findViewById(R.id.fab2);
     }
 
@@ -359,6 +353,22 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         },60000);
 
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_maps, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_Menu:
+                startActivity(new Intent(MapsActivity.this, ShowMemory.class));
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

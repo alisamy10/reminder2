@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="saveourcar.soc.MainActivity">
+    <item
+        android:id="@+id/action_Menu"
+        android:orderInCategory="100"
+        android:title="Show Memory"
+        app:showAsAction="never" >
+
+    </item>
+</menu>

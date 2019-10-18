@@ -25,7 +25,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/demi</item>
     </style>
 
@@ -52,10 +53,10 @@
     <style name="TextAppearance.Subhead.Bold" parent="@style/TextAppearance.AppCompat.Subhead">
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="customRatingBar"
-        parent="android:style/Widget.Material.RatingBar.Small">
-        ... // Additional customizations
-    </style>
+
+    <style name="customRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+        ... // Additional customizations</style>
+
     <style name="RatingBar_home" parent="Theme.AppCompat">
         <item name="colorControlNormal">#c7c7c7</item>
         <item name="colorControlActivated">#c7c7c7</item>

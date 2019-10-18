@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.database.NoteDataBase;
 import com.example.reminder2.locationHelper.MyLocationProvider;
@@ -24,9 +27,14 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddReminder extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener {
 
@@ -38,11 +46,11 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
     private double lat, lang;
     private int Request_Camera = 100, Select_Image = 101;
     public byte[] byteImage;
-    private EditText descEdit;
-    private EditText tittleEdit;
-    private TextView dateTxt;
-    private TextView timeTxt;
+    private EditText tittleEdit, descEdit;
+    private TextView dateTxt, timeTxt;
     private Button saveBtn;
+    private CircleImageView memoryImage;
+    private Bitmap bitmap;
 
 
     @Override
@@ -50,7 +58,6 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
         initView();
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         sDate = sdf.format(new Date());
@@ -64,14 +71,16 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
     }
 
     private void initView() {
-        descEdit =  findViewById(R.id.edit_desc);
-        tittleEdit =  findViewById(R.id.edit_tittle);
-        dateTxt =  findViewById(R.id.txt_date1);
+        descEdit = findViewById(R.id.edit_desc);
+        tittleEdit = findViewById(R.id.edit_tittle);
+        dateTxt = findViewById(R.id.txt_date1);
         dateTxt.setOnClickListener(this);
-        timeTxt =  findViewById(R.id.txt_time1);
+        timeTxt = findViewById(R.id.txt_time1);
         timeTxt.setOnClickListener(this);
-        saveBtn =  findViewById(R.id.sign_up_btn);
+        saveBtn = findViewById(R.id.sign_up_btn);
         saveBtn.setOnClickListener(this);
+        memoryImage = (CircleImageView) findViewById(R.id.profile_image);
+        memoryImage.setOnClickListener(this);
     }
 
 
@@ -89,17 +98,16 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         lat = location.getLatitude();
         lang = location.getLongitude();
 
-        /*if (mImage.getDrawable() != null) {
+        if (memoryImage.getDrawable() != null) {
 
-            Bitmap bitmap = ((BitmapDrawable) mImage.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap = ((BitmapDrawable) memoryImage.getDrawable()).getBitmap();
             if (bitmap != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byteImage = baos.toByteArray();
             }
         }
 
-         */
 
         Note note = new Note(titleS, des, date, timeS, lat, lang, byteImage);
         NoteDataBase.getInstance(this).notesDao()
@@ -151,52 +159,46 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
 
     @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute  ) {
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
         if (minute < 10)
             sTime = hourOfDay + ":" + "0" + minute;
-         else
+        else
             sTime = hourOfDay + ":" + minute;
 
         timeTxt.setText(sTime);
     }
+    MaterialDialog materialDialog ;
 
+    private void selectImage() {
+          materialDialog = new MaterialDialog.Builder(this)
+                .title(R.string.uploadImages)
+                .items(R.array.uploadImages)
+                .itemsIds(R.array.itemIds)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        switch (which){
+                            case 0:
 
-
-    private void SelectImage() {
-
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddReminder.this);
-        builder.setTitle("Add Image");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-
-                if (items[i].equals("Camera")) {
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, Request_Camera);
-
-
-                } else if (items[i].equals("Gallery")) {
-
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                    startActivityForResult(intent.createChooser(intent, "Select File"), Select_Image);
-
-                } else if (items[i].equals("Cancel")) {
-
-                    dialog.dismiss();
-
-                }
-            }
-        });
-
-        builder.show();
-
-
+                                Intent intentgallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                intentgallery.setType("image/*");
+                                if(intentgallery.resolveActivity(getPackageManager())!=null)
+                                startActivityForResult(intentgallery.createChooser(intentgallery, "Select File"), Select_Image);
+                                break;
+                            case 1:
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if(intent.resolveActivity(getPackageManager())!=null)
+                                    startActivityForResult(intent, Request_Camera);
+                                break;
+                            case 2:
+                                materialDialog.dismiss();
+                                break;
+                        }
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -210,29 +212,36 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
             if (requestCode == Request_Camera) {
 
-                Bundle bundle = data.getExtras();
-                final Bitmap bitmap = (Bitmap) bundle.get("image");
-                //mImage.setImageBitmap(bitmap);
+                bitmap = (Bitmap) data.getExtras().get("data");
+                if (bitmap != null)
+                    memoryImage.setImageBitmap(bitmap);
 
             } else if (requestCode == Select_Image) {
-
-                Uri SelectedImageUri = data.getData();
-                CropImage.activity(SelectedImageUri)
-                        .setAspectRatio(1, 1)
-                        .setMinCropWindowSize(500, 500)
-                        .start(this);
-                //mImage.setImageURI(SelectedImageUri);
+                if (data != null) {
+                    try {
+                        final Uri SelectedImageUri = data.getData();
+                        final InputStream stream = getContentResolver().openInputStream(SelectedImageUri);
+                        bitmap = BitmapFactory.decodeStream(stream);
+                        CropImage.activity(SelectedImageUri)
+                                .setAspectRatio(1, 1)
+                                .setMinCropWindowSize(500, 500)
+                                .start(this);
+                        memoryImage.setImageBitmap(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
         }
     }
+
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_date1:
-                  setDate();
+                setDate();
                 // TODO 19/10/17
                 break;
             case R.id.txt_time1:
@@ -240,17 +249,24 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
                 // TODO 19/10/17
                 break;
             case R.id.sign_up_btn:
-                if(tittleEdit.getText().toString().trim().isEmpty())
-                {tittleEdit.setError("input required");return ;}
-                if(descEdit.getText().toString().trim().isEmpty())
-                { descEdit.setError("input required");return ;}
+                if (tittleEdit.getText().toString().trim().isEmpty()) {
+                    tittleEdit.setError("input required");
+                    return;
+                }
+                if (descEdit.getText().toString().trim().isEmpty()) {
+                    descEdit.setError("input required");
+                    return;
+                }
 
-                else{
+                else {
                     saveReminder();
-                  startActivity(new Intent(this,MapsActivity.class));
-                  finish();
+                    startActivity(new Intent(this, MapsActivity.class));
+                    finish();
                 }
                 // TODO 19/10/17
+                break;
+            case R.id.profile_image:// TODO 19/10/18
+                selectImage();
                 break;
             default:
                 break;
