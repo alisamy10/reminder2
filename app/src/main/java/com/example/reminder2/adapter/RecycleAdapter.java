@@ -54,7 +54,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         if(noteList==null)return 0;
         return noteList.size();
     }
-    public Note getTodo( int position){
+    public Note getNote( int position){
 
         Note todo = noteList.get(position);
         return todo;

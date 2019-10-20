@@ -20,8 +20,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.R;
 import com.example.reminder2.database.NoteDataBase;
-import com.example.reminder2.locationHelper.MyLocationProvider;
 import com.example.reminder2.database.model.Note;
+import com.example.reminder2.locationHelper.MyLocationProvider;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -112,12 +113,18 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
         Note note = new Note(titleS, des, date, timeS, lat, lang, byteImage);
         NoteDataBase.getInstance(this).notesDao()
                 .insert(note);
+
+
+
+
         showMessage(R.string.note_added_successfully, R.string.ok
                 , new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+
                         finish();
+
                     }
                 }, false);
     }
@@ -260,8 +267,7 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
 
                 else {
                     saveReminder();
-                    startActivity(new Intent(this, MapsActivity.class));
-                    finish();
+
                 }
                 // TODO 19/10/17
                 break;
@@ -271,6 +277,14 @@ public class AddReminder extends BaseActivity implements DatePickerDialog.OnDate
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+        MapsActivity.tagForNotification = "stop";
     }
 }
 

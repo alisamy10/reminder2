@@ -11,6 +11,7 @@ import android.app.SearchManager;
 import android.content.Context;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,8 +22,8 @@ import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.R;
 import com.example.reminder2.adapter.RecycleAdapter;
 import com.example.reminder2.database.NoteDataBase;
-import com.example.reminder2.helper.SwipeToDeleteCallback;
 import com.example.reminder2.database.model.Note;
+import com.example.reminder2.helper.SwipeToDeleteCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +42,7 @@ public class ShowMemory extends BaseActivity implements SearchView.OnQueryTextLi
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
          noteList=new ArrayList<>();
         recyclerView = findViewById(R.id.rec);
         recyclerView.setHasFixedSize(true);
@@ -64,7 +65,7 @@ public class ShowMemory extends BaseActivity implements SearchView.OnQueryTextLi
                     public void onClick(DialogInterface dialog, int which) {
                         NoteDataBase.getInstance(ShowMemory.this)
                                 .notesDao()
-                                .delete(adapter.getTodo(viewHolder.getAdapterPosition()));
+                                .delete(adapter.getNote(viewHolder.getAdapterPosition()));
 
                         List<Note> list = NoteDataBase.getInstance(ShowMemory.this)
                                 .notesDao()
@@ -184,5 +185,11 @@ public class ShowMemory extends BaseActivity implements SearchView.OnQueryTextLi
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+        startActivity(new Intent(ShowMemory.this, MapsActivity.class));
+        finish();
+    }
 }

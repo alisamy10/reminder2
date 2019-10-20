@@ -21,8 +21,9 @@ import androidx.core.content.ContextCompat;
 import com.example.reminder2.Base.BaseActivity;
 import com.example.reminder2.R;
 import com.example.reminder2.database.NoteDataBase;
-import com.example.reminder2.locationHelper.MyLocationProvider;
 import com.example.reminder2.database.model.Note;
+import com.example.reminder2.locationHelper.MyLocationProvider;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -48,14 +49,16 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     private List<Note> allNotes;
     private Marker userMarker;
     boolean checkForOneTimeCallDarwarMarker = false ;
-     private  String tagForNotification = "";
-     boolean getMarkersOneTime  ;
+    public  static   String tagForNotification ;
+    boolean getMarkersOneTime  ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        if (tagForNotification==null) {
+            tagForNotification = "";
+        }
         getMarkersOneTime=true;
         initView();
         mapView.onCreate(savedInstanceState);
@@ -63,6 +66,9 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         onClick();
 
         allNotes = new ArrayList<>();
+
+
+        Log.e("k",tagForNotification+"  create");
 
 
 
@@ -101,8 +107,10 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this, AddReminder.class));
+
                 checkForOneTimeCallDarwarMarker= true;
                 getMarkersOneTime =true;
+                tagForNotification = "stop";
             }
         });
 
@@ -135,6 +143,9 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         mapView.getMapAsync(this);
 
         allNotes = NoteDataBase.getInstance(getApplicationContext()).notesDao().getAllNotes();
+
+        Log.e("k",tagForNotification+"  start");
+        Toast.makeText(this, allNotes.size()+"", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -270,6 +281,8 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
+        Log.e("k",tagForNotification+"  ready ");
+
 
         getMarkars(getMarkersOneTime);
 
@@ -296,7 +309,7 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
                  }
 
              }
-         freezNotificationOneMin();
+          freezNotificationOneMin();
              //else pickupMarker.position(new LatLng (allNotes.get(i).getLat(),allNotes.get(i).getLng()));
 
 
@@ -366,6 +379,8 @@ public class MapsActivity extends BaseActivity implements LocationListener, OnMa
         switch (item.getItemId()) {
             case R.id.action_Menu:
                 startActivity(new Intent(MapsActivity.this, ShowMemory.class));
+                finish();
+
                 break;
 
         }

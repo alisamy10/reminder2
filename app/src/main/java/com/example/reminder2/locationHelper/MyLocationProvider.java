@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class MyLocationProvider {
+
     LocationManager locationManager;
     Location location;
     public static final long MINIMUM_TIME_BETWEEN_UPDATES = 5*1000;  // 5 second

@@ -11,7 +11,6 @@ public class Note {
  private int id;
  private String title,description,date,time;
  private Double lat,lng;
-
  @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
  private byte [] image;
 
@@ -85,7 +84,7 @@ public class Note {
         this.lng = lng;
     }
 
-    public byte [] getImage() {
+    public byte[] getImage() {
         return image;
     }
 

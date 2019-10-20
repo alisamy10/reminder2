@@ -106,7 +106,7 @@ public AlertDialog showMessage(int message, int posActionName,
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentTitle("ali")
+                    .setContentTitle("Alert")
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
